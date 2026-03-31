@@ -25,3 +25,12 @@
 - HTML / CSS / JavaScript（フレームワークなし）
 - GitHub Pages でホスティング
 - Service Worker によるオフラインキャッシュ
+
+## バージョニング
+
+`YYYYMMDD.N` 形式（例: `20260331.1`）
+
+- `YYYYMMDD` — 更新日
+- `.N` — 同日内の更新連番（1始まり）
+
+アプリ右下に表示。Service Worker のキャッシュ名も同じバージョンと連動。

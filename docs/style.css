@@ -80,3 +80,11 @@ body {
 .hidden {
   display: none !important;
 }
+
+#version {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  font-size: 10px;
+  color: #333;
+}
