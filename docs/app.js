@@ -41,17 +41,6 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") requestWakeLock();
 });
 
-// --- WakeLock デバッグ ---
-$("wl-debug").addEventListener("click", async (e) => {
-  e.stopPropagation();
-  try {
-    const wl = await navigator.wakeLock.request("screen");
-    alert("Wake Lock: OK");
-    wl.release();
-  } catch (err) {
-    alert("Wake Lock: " + err.name + "\n" + err.message);
-  }
-});
 
 // --- 風向 → 日本語ラベル ---
 function degToLabel(deg) {
