@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Icons</title></head>
+<body>
+<canvas id="c"></canvas>
+<script>
+function generate(size) {
+  const c = document.getElementById("c");
+  c.width = c.height = size;
+  const ctx = c.getContext("2d");
+
+  ctx.fillStyle = "#111";
+  ctx.fillRect(0, 0, size, size);
+
+  // 矢印: アプリと同じ比率、回転なし、中央配置
+  // 元の座標: (50,5)(15,90)(50,70)(85,90) → 幅70, 高さ85
+  // パディング15%確保
+  const pad = size * 0.15;
+  const area = size - pad * 2;
+  const scale = area / 100;
+  const ox = pad + (area - 70 * scale) / 2 - 15 * scale;
+  const oy = pad + (area - 85 * scale) / 2 - 5 * scale;
+
+  ctx.fillStyle = "#fff";
+  ctx.beginPath();
+  ctx.moveTo(ox + 50 * scale, oy + 5 * scale);
+  ctx.lineTo(ox + 15 * scale, oy + 90 * scale);
+  ctx.lineTo(ox + 50 * scale, oy + 70 * scale);
+  ctx.lineTo(ox + 85 * scale, oy + 90 * scale);
+  ctx.closePath();
+  ctx.fill();
+
+  const a = document.createElement("a");
+  a.download = `icon-${size}.png`;
+  a.href = c.toDataURL("image/png");
+  a.click();
+}
+
+generate(512);
+setTimeout(() => generate(192), 500);
+</script>
+<p>アイコンが自動ダウンロードされます</p>
+</body>
+</html>

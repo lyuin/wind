@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arrow Samples</title>
+  <style>
+    body { background: #111; color: #eee; font-family: sans-serif; text-align: center; padding: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 600px; margin: 0 auto; }
+    .sample { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .sample svg { width: 80px; height: 80px; }
+    .label { font-size: 14px; color: #888; }
+  </style>
+</head>
+<body>
+  <h2 style="margin-bottom:2rem;">Arrow Samples</h2>
+  <div class="grid">
+
+    <!-- A: シャープ三角 -->
+    <div class="sample">
+      <svg viewBox="0 0 100 100">
+        <polygon points="50,5 15,90 50,70 85,90" fill="#4fc3f7"/>
+      </svg>
+      <div class="label">A: シャープ三角</div>
+    </div>
+
+    <!-- B: 細長ダイヤ -->
+    <div class="sample">
+      <svg viewBox="0 0 100 100">
+        <polygon points="50,0 35,60 50,50 65,60" fill="#4fc3f7"/>
+      </svg>
+      <div class="label">B: 細長ダイヤ</div>
+    </div>
+
+    <!-- C: ナビ風 -->
+    <div class="sample">
+      <svg viewBox="0 0 100 100">
+        <polygon points="50,5 20,95 50,75 80,95" fill="none" stroke="#4fc3f7" stroke-width="4" stroke-linejoin="round"/>
+      </svg>
+      <div class="label">C: ナビ風（アウトライン）</div>
+    </div>
+
+    <!-- D: 太矢印 -->
+    <div class="sample">
+      <svg viewBox="0 0 100 100">
+        <polygon points="50,5 10,55 30,55 30,95 70,95 70,55 90,55" fill="#4fc3f7"/>
+      </svg>
+      <div class="label">D: 太矢印</div>
+    </div>
+
+    <!-- E: シェブロン -->
+    <div class="sample">
+      <svg viewBox="0 0 100 100">
+        <polyline points="15,65 50,20 85,65" fill="none" stroke="#4fc3f7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="label">E: シェブロン</div>
+    </div>
+
+  </div>
+</body>
+</html>
