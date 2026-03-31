@@ -11,13 +11,33 @@ const UPDATE_INTERVAL = 10_000;
 
 let wakeLock = null;
 
-// --- Wake Lock ---
+// --- Wake Lock (API + iOS動画フォールバック) ---
 async function requestWakeLock() {
   try {
     wakeLock = await navigator.wakeLock.request("screen");
     wakeLock.addEventListener("release", () => { wakeLock = null; });
-  } catch { /* unsupported or denied */ }
+  } catch {
+    startNoSleepVideo();
+  }
 }
+
+function startNoSleepVideo() {
+  if (document.getElementById("nosleep")) return;
+  const video = document.createElement("video");
+  video.id = "nosleep";
+  video.setAttribute("playsinline", "");
+  video.setAttribute("muted", "");
+  video.muted = true;
+  video.loop = true;
+  video.style.cssText = "position:fixed;opacity:0;width:1px;height:1px;pointer-events:none;";
+  // 無音の極小mp4 (base64)
+  video.src = "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAACttZGF0AAACrgYF//+q3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE1MAAAABhzdHRzAAAAAAAAAAEAAAABAAAEAAAAABRzdHNzAAAAAAAAAAEAAAABAAAAHHN0c2MAAAAAAAAAAgAAAAEAAAABAAAAAQAAAAIAAAABAAAAKHN0c3oAAAAAAAAAAAAAAAIAAAK1AAAACwAAABRzdGNvAAAAAAAAAAEAAAAwAAAAYnVkdGEAAABabWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAbWRpcmFwcGwAAAAAAAAAAAAAAAAtaWxzdAAAACWpdG9vAAAAHWRhdGEAAAABAAAAAExhdmY2MC4xNi4xMDA=";
+  document.body.appendChild(video);
+  video.play().catch(() => {});
+  // iOS: ユーザー操作後に再生開始
+  document.addEventListener("touchstart", () => video.play().catch(() => {}), { once: true });
+}
+
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") requestWakeLock();
 });
