@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Wind</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="main">
+      <div id="arrow-container">
+        <svg id="arrow" viewBox="0 0 100 100"><polygon points="50,5 15,90 50,70 85,90" fill="#fff"/></svg>
+      </div>
+      <div id="direction-label">---</div>
+      <div id="speed">--</div>
+      <div id="unit">m/s</div>
+    </div>
+    <div id="error" class="hidden"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

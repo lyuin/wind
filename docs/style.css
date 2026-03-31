@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Meiryo UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+  background: #111;
+  color: #eee;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#app {
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* 風向矢印 */
+#arrow-container {
+  margin-bottom: 1rem;
+}
+
+#arrow {
+  width: 28vw;
+  height: 28vw;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 風速 */
+#speed {
+  font-size: 22vw;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+#unit {
+  font-size: 5vw;
+  color: #888;
+  margin-top: 0.3rem;
+}
+
+/* 風向ラベル */
+#direction-label {
+  font-size: 7vw;
+  color: #aaa;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+#arrow.loading polygon {
+  fill: #444;
+}
+
+#arrow.loading {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+#error {
+  font-size: 4vw;
+  color: #e57373;
+  padding: 1rem;
+  line-height: 1.6;
+}
+
+.hidden {
+  display: none !important;
+}
