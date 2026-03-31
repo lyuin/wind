@@ -16,9 +16,8 @@ async function requestWakeLock() {
   try {
     wakeLock = await navigator.wakeLock.request("screen");
     wakeLock.addEventListener("release", () => { wakeLock = null; });
-  } catch {
-    startNoSleepVideo();
-  }
+  } catch { /* unsupported or denied */ }
+  startNoSleepVideo();
 }
 
 function startNoSleepVideo() {
