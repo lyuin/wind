@@ -7,7 +7,7 @@ const DIRS_JA = [
   "西", "西北西", "北西", "北北西",
 ];
 
-const UPDATE_INTERVAL = 30_000;
+const UPDATE_INTERVAL = 15_000;
 
 let wakeLock = null;
 

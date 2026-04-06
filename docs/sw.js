@@ -1,4 +1,4 @@
-const CACHE_NAME = "wind-20260406.4";
+const CACHE_NAME = "wind-20260406.5";
 const SHELL = ["./", "index.html", "style.css", "app.js", "manifest.json"];
 
 self.addEventListener("install", (e) => {
