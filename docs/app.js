@@ -79,6 +79,7 @@ function render(speed, direction) {
 }
 
 function showLoading() {
+  currentRotation = 0;
   $("arrow").classList.add("loading");
   $("arrow").style.transform = "rotate(0deg)";
   $("speed").style.visibility = "hidden";
@@ -99,14 +100,6 @@ function showError(msg) {
   $("arrow").classList.add("loading");
   $("error").classList.remove("hidden");
   $("error").textContent = msg;
-}
-
-function showOffline() {
-  $("arrow").classList.add("loading");
-  $("speed").style.visibility = "hidden";
-  $("unit").style.visibility = "hidden";
-  $("direction-label").style.visibility = "hidden";
-  $("arrow").style.transform = "rotate(0deg)";
 }
 
 // --- メインループ ---
