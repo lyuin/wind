@@ -86,17 +86,18 @@ body {
   position: fixed;
   bottom: 8px;
   left: 8px;
-  font-size: 14px;
+  font-size: 10px;
+  font-family: inherit;
   background: none;
   border: none;
   color: #333;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   line-height: 1;
 }
 
 #wakelock.active {
-  color: #fb3;
+  color: #555;
 }
 
 #version {

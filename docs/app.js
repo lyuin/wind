@@ -18,6 +18,7 @@ async function toggleWakeLock() {
     await wakeLock.release();
     wakeLock = null;
     btn.classList.remove("active");
+    btn.textContent = "lock off";
     return;
   }
   try {
@@ -25,8 +26,10 @@ async function toggleWakeLock() {
     wakeLock.addEventListener("release", () => {
       wakeLock = null;
       btn.classList.remove("active");
+      btn.textContent = "lock off";
     });
     btn.classList.add("active");
+    btn.textContent = "lock on";
   } catch (err) {
     console.error(`${err.name}, ${err.message}`);
   }
