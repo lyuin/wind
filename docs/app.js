@@ -7,38 +7,38 @@ const DIRS_JA = [
   "西", "西北西", "北西", "北北西",
 ];
 
-const UPDATE_INTERVAL = 10_000;
+const UPDATE_INTERVAL = 30_000;
 
 let wakeLock = null;
 
-// --- Wake Lock (API + iOS動画フォールバック) ---
-async function requestWakeLock() {
+// --- Wake Lock (ボタン操作) ---
+async function toggleWakeLock() {
+  const btn = $("wakelock");
+  if (wakeLock) {
+    await wakeLock.release();
+    wakeLock = null;
+    btn.classList.remove("active");
+    return;
+  }
   try {
     wakeLock = await navigator.wakeLock.request("screen");
-    wakeLock.addEventListener("release", () => { wakeLock = null; });
-  } catch { /* unsupported or denied */ }
-  startNoSleepVideo();
-}
-
-function startNoSleepVideo() {
-  if (document.getElementById("nosleep")) return;
-  const video = document.createElement("video");
-  video.id = "nosleep";
-  video.setAttribute("playsinline", "");
-  video.setAttribute("muted", "");
-  video.muted = true;
-  video.loop = true;
-  video.style.cssText = "position:fixed;opacity:0;width:1px;height:1px;pointer-events:none;";
-  // 無音の極小mp4 (base64)
-  video.src = "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAACttZGF0AAACrgYF//+q3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE1MAAAABhzdHRzAAAAAAAAAAEAAAABAAAEAAAAABRzdHNzAAAAAAAAAAEAAAABAAAAHHN0c2MAAAAAAAAAAgAAAAEAAAABAAAAAQAAAAIAAAABAAAAKHN0c3oAAAAAAAAAAAAAAAIAAAK1AAAACwAAABRzdGNvAAAAAAAAAAEAAAAwAAAAYnVkdGEAAABabWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAbWRpcmFwcGwAAAAAAAAAAAAAAAAtaWxzdAAAACWpdG9vAAAAHWRhdGEAAAABAAAAAExhdmY2MC4xNi4xMDA=";
-  document.body.appendChild(video);
-  video.play().catch(() => {});
-  // iOS: ユーザー操作後に再生開始
-  document.addEventListener("touchstart", () => video.play().catch(() => {}), { once: true });
+    wakeLock.addEventListener("release", () => {
+      wakeLock = null;
+      btn.classList.remove("active");
+    });
+    btn.classList.add("active");
+  } catch (err) {
+    console.error(`${err.name}, ${err.message}`);
+  }
 }
 
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") requestWakeLock();
+  if (document.visibilityState === "visible") {
+    if ($("wakelock").classList.contains("active")) toggleWakeLock();
+    startLoop();
+  } else {
+    stopLoop();
+  }
 });
 
 
@@ -115,7 +115,7 @@ async function update() {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
         enableHighAccuracy: false,
         timeout: 8000,
-        maximumAge: UPDATE_INTERVAL,
+        maximumAge: 60_000,
       })
     );
     const { latitude, longitude } = pos.coords;
@@ -127,17 +127,27 @@ async function update() {
   }
 }
 
+function startLoop() {
+  if (intervalId) return;
+  update();
+  intervalId = setInterval(update, UPDATE_INTERVAL);
+}
+
+function stopLoop() {
+  clearInterval(intervalId);
+  intervalId = null;
+}
+
 async function init() {
   showLoading();
-  await requestWakeLock();
+  $("wakelock").addEventListener("click", toggleWakeLock);
 
   if (!navigator.geolocation) {
     showError("位置情報に対応していません");
     return;
   }
 
-  await update();
-  intervalId = setInterval(update, UPDATE_INTERVAL);
+  startLoop();
 }
 
 // Service Worker 登録

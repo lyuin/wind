@@ -68,6 +68,7 @@ body {
 
 #arrow.loading {
   animation: pulse 2s ease-in-out infinite;
+  will-change: opacity;
 }
 
 #error {
@@ -79,6 +80,23 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+#wakelock {
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  font-size: 14px;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+#wakelock.active {
+  color: #fb3;
 }
 
 #version {
